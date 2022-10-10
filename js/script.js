@@ -115,6 +115,7 @@ window.addEventListener('DOMContentLoaded', () => {
         modal.classList.remove('hide');
         document.body.style.overflow = 'hidden'; //Блок полосы прокрутки
         clearInterval(modalTimerId);
+        window.removeEventListener('scroll', showModalByScroll);
     }
     
     modalTriggers.forEach(i => {
@@ -148,7 +149,6 @@ window.addEventListener('DOMContentLoaded', () => {
     function showModalByScroll() {
         if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
             openModal();
-            window.removeEventListener('scroll', showModalByScroll);
         }
     }
 
