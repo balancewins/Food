@@ -5,8 +5,8 @@ window.addEventListener('DOMContentLoaded', () => {
     //Tabs
 
     const tabs = document.querySelectorAll('.tabheader__item'),
-          tabsContent = document.querySelectorAll('.tabcontent'),
-          tabsParent = document.querySelector('.tabheader__items');
+        tabsContent = document.querySelectorAll('.tabcontent'),
+        tabsParent = document.querySelector('.tabheader__items');
 
     function hideTabContent() {
         tabsContent.forEach(item => {
@@ -55,8 +55,8 @@ window.addEventListener('DOMContentLoaded', () => {
             minutes = 0;
             seconds = 0;
         } else {
-            days = Math.floor(t / (1000*60*60*24));
-            hours = Math.floor((t / (1000*60*60)) % 24);
+            days = Math.floor(t / (1000 * 60 * 60 * 24));
+            hours = Math.floor((t / (1000 * 60 * 60)) % 24);
             minutes = Math.floor((t / 1000 / 60) % 60);
             seconds = Math.floor((t / 1000) % 60);
         }
@@ -74,17 +74,17 @@ window.addEventListener('DOMContentLoaded', () => {
         if (num >= 0 && num < 10) {
             return `0${num}`;
         } else {
-            return(num);
+            return (num);
         }
     }
 
     function setClock(selector, endtime) {
         const timer = document.querySelector(selector),
-              days = timer.querySelector('#days'),
-              hours = timer.querySelector('#hours'),
-              minutes = timer.querySelector('#minutes'),
-              seconds = timer.querySelector('#seconds'),
-              timeInterval = setInterval(updateClock, 1000);
+            days = timer.querySelector('#days'),
+            hours = timer.querySelector('#hours'),
+            minutes = timer.querySelector('#minutes'),
+            seconds = timer.querySelector('#seconds'),
+            timeInterval = setInterval(updateClock, 1000);
 
         updateClock(); //Ручной запуск таймера при открытии страницы без задержки в 1000мс
 
@@ -107,7 +107,7 @@ window.addEventListener('DOMContentLoaded', () => {
     // Modal
 
     const modalTriggers = document.querySelectorAll('[data-modal]'),
-          modal = document.querySelector('.modal');
+        modal = document.querySelector('.modal');
 
     function openModal() {
         modal.classList.add('show');
@@ -116,12 +116,12 @@ window.addEventListener('DOMContentLoaded', () => {
         clearInterval(modalTimerId);
         window.removeEventListener('scroll', showModalByScroll);
     }
-    
+
     modalTriggers.forEach(i => {
         i.addEventListener('click', openModal);
     });
 
-    
+
 
     function closeModal() {
         modal.classList.add('hide');
@@ -179,7 +179,7 @@ window.addEventListener('DOMContentLoaded', () => {
             } else {
                 this.classes.forEach(className => element.classList.add(className));
             }
-            
+
             element.innerHTML = `
                 <img src=${this.src} alt=${this.alt}>
                 <h3 class="menu__item-subtitle">${this.title}</h3>
@@ -248,30 +248,29 @@ window.addEventListener('DOMContentLoaded', () => {
             `;
             form.insertAdjacentElement('afterend', statusMessage);
 
-            const request = new XMLHttpRequest();
-            request.open('POST', 'server.php');
-
-            request.setRequestHeader('Content-type', 'application/json');
             const formData = new FormData(form);
 
             const object = {};
-            formData.forEach(function(value, key){
+            formData.forEach(function(value, key) {
                 object[key] = value;
             });
 
-            const json = JSON.stringify(object);
-
-            request.send(json);
-
-            request.addEventListener('load', () => {
-                if (request.status === 200) {
-                    console.log(request.response);
-                    showThanksModal(message.success);
-                    form.reset();
-                    statusMessage.remove();
-                } else {
-                    showThanksModal(message.failure);
-                }
+            fetch('server.php', {
+                method: "POST",
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(object)
+            })
+            .then(data => data.text())
+            .then(data => {
+                console.log(data);
+                showThanksModal(message.success);
+                statusMessage.remove();
+            }).catch(() => {
+                showThanksModal(message.failure);
+            }).finally(() => {
+                form.reset();
             });
         });
     }
@@ -299,5 +298,15 @@ window.addEventListener('DOMContentLoaded', () => {
             closeModal();
         }, 5000);
     }
+
+    fetch('https://jsonplaceholder.typicode.com/posts', {
+        method: "POST",
+        body: JSON.stringify({name: 'Alex'}),
+        headers: {
+            'content-type': 'application/json'
+        }
+    })
+        .then(response => response.json())
+        .then(json => console.log(json));
 
 });
