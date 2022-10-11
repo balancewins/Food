@@ -1,0 +1,26 @@
+{
+  "name": "food",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/balancewins/Food.git"
+  },
+  "keywords": [
+    "food",
+    "firstProject"
+  ],
+  "author": "balancewins",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/balancewins/Food/issues"
+  },
+  "homepage": "https://github.com/balancewins/Food#readme",
+  "devDependencies": {
+    "json-server": "^0.17.0"
+  }
+}
