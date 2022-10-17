@@ -12,8 +12,8 @@ window.addEventListener('DOMContentLoaded', () => {
     const modalTimerId = setTimeout(() => openModal('.modal', modalTimerId), 30000);
 
     calc();
-    cards();
-    forms('form', modalTimerId);
+    cards('https://cdn.cur.su/api/latest.json');
+    forms('form', modalTimerId); 
     modalWindow('[data-modal]', '.modal', modalTimerId);
     slider({
         container: '.offer__slider',

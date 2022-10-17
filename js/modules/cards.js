@@ -1,6 +1,6 @@
 import {getResourses} from '../services/services';
 
-function cards() {
+function cards(urlTransfer) {
     
     class MenuCard {
         constructor(src, alt, title, description, price, parentSelector, ...classes) {
@@ -43,9 +43,9 @@ function cards() {
         }
     }
 
-    getResourses('https://cdn.cur.su/api/latest.json')
+    getResourses(urlTransfer)
         .then(data => {
-            const transferRUB = data.rates.RUB || 60;
+            const transferRUB = data.rates.RUB;
 
             getResourses('http://localhost:3000/menu')
             .then(data => {
