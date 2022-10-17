@@ -11,12 +11,11 @@ function cards() {
             this.price = price;
             this.classes = classes;
             this.parent = document.querySelector(parentSelector);
-            this.transfer = 62.3;
-            this.changeToRub();
+            this.roundPrice();
         }
 
-        changeToRub() {
-            this.price = Math.round(this.price * this.transfer);
+        roundPrice() {
+            this.price = Math.round(this.price);
         }
 
         render() {
@@ -44,12 +43,19 @@ function cards() {
         }
     }
 
-    getResourses('http://localhost:3000/menu')
+    getResourses('https://cdn.cur.su/api/latest.json')
         .then(data => {
-            data.forEach(({img, altimg, title, descr, price}) => {
-                new MenuCard(img, altimg, title, descr, price, '.menu .container').render();
+            const transferRUB = data.rates.RUB || 60;
+
+            getResourses('http://localhost:3000/menu')
+            .then(data => {
+                data.forEach(({img, altimg, title, descr, price}) => {
+                    new MenuCard(img, altimg, title, descr, price * transferRUB, '.menu .container').render();
+                });
             });
         });
+
+
 
     // axios.get('http://localhost:3000/menu')
     //     .then(data => {
