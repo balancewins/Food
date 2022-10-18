@@ -1,6 +1,6 @@
 import {getResourses} from '../services/services';
 
-function cards(urlTransfer) {
+function cards() {
     
     class MenuCard {
         constructor(src, alt, title, description, price, parentSelector, ...classes) {
@@ -43,14 +43,15 @@ function cards(urlTransfer) {
         }
     }
 
-    getResourses(urlTransfer)
+    getResourses('https://cdn.cur.su/api/latest.json')
         .then(data => {
             const transferRUB = data.rates.RUB;
+            console.log(`Курс USD-RUB: ${transferRUB}`);
 
             getResourses('http://localhost:3000/menu')
             .then(data => {
                 data.forEach(({img, altimg, title, descr, price}) => {
-                    new MenuCard(img, altimg, title, descr, price * transferRUB, '.menu .container').render();
+                    new MenuCard(img, altimg, title, descr, price * (transferRUB || 50), '.menu .container').render();
                 });
             });
         });

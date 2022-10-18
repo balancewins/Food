@@ -12,7 +12,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const modalTimerId = setTimeout(() => openModal('.modal', modalTimerId), 30000);
 
     calc();
-    cards('https://cdn.cur.su/api/latest.json');
+    cards();
     forms('form', modalTimerId); 
     modalWindow('[data-modal]', '.modal', modalTimerId);
     slider({
