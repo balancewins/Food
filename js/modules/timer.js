@@ -1,6 +1,7 @@
 function timer(id, deadline) {
 
     function getTimeRemaining(endtime) {
+
         const t = Date.parse(endtime) - Date.parse(new Date());
         let days, hours, minutes, seconds;
 
@@ -58,6 +59,10 @@ function timer(id, deadline) {
     }
 
     setClock(id, deadline);
+
+    const months = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
+    document.querySelector('#deadline').textContent = `${new Date(deadline).getDate()} ${months[new Date(deadline).getMonth()]}`;
+
 }
 
 export default timer;
